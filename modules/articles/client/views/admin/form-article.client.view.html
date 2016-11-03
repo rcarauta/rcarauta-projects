@@ -1,0 +1,63 @@
+<section>
+  <div class="page-header">
+    <h1>{{vm.article._id ? 'Edit Article' : 'New Article'}}</h1>
+  </div>
+  <div class="pull-right">
+    <a ng-show="vm.article._id" class="btn btn-primary" ng-click="vm.remove()">
+      <i class="glyphicon glyphicon-trash"></i>
+    </a>
+  </div>
+  <div class="col-md-12">
+    <form name="vm.form.articleForm" class="form-horizontal" ng-submit="vm.save(vm.form.articleForm.$valid)" novalidate>
+      <fieldset>
+        <div class="form-group">
+          <label class="control-label"  for="localizacao">Localização</label>
+          <ng-map center="[{{vm.article.lat}},{{vm.article.lon}}]" zoom ='13' id="myMap" on-click="vm.updateLocation($event)">
+            <marker position="[{{vm.article.lat}},{{vm.article.lon}}]" visible="true" ></marker>
+          </ng-map>
+          <a class="btn btn-primary" ng-click="vm.localizarUsuario()">Informar Localização</a>
+        </div>
+        <div class="form-group">
+          <label class="control-label" for="nome" ng-show="vm.article.user != undefined">Nome</label>
+          <input name="nome" type="text" ng-model="vm.article.user.displayName" id="nome" class="form-control" readonly="true" ng-show="vm.article.user != undefined">
+        </div>
+        <div class="form-group">
+          <label class="control-label" for="email" ng-show="vm.article.user != undefined">e-mail</label>
+          <input name="email" type="text" ng-model="vm.article.user.email" id="email" class="form-control" readonly="true" ng-show="vm.article.user != undefined">
+        </div>
+         <div class="form-group" show-errors>
+          <label class="control-label" for="telefone">telefone</label>
+          <input name="telefone" type="text" ng-model="vm.article.telefone" id="telefone" class="form-control" placeholder="digite seu telefone" required>
+          <div ng-messages="vm.form.articleForm.telefone.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">O telefone é obrigatório.</p>
+          </div>
+        </div>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="cidade">Cidade</label>
+          <input name="cidade" type="text" ng-model="vm.article.cidade" id="cidade" class="form-control" placeholder="digite sua cidade" required>
+          <div ng-messages="vm.form.articleForm.cidade.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">A cidade é obrigatória.</p>
+          </div>
+        </div>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="estado">Estado</label>
+          <input name="estado" type="text" ng-model="vm.article.estado" id="estado" class="form-control" placeholder="digite o seu estado" required>
+          <div ng-messages="vm.form.articleForm.estado.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">A estado é obrigatório.</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label" for="cep">CEP</label>
+          <input name="cep" type="text" ng-model="vm.article.cep" id="cep" class="form-control" placeholder="Digite o cep">     
+        </div>
+        <div class="form-group">
+          <label class="control-label" for="descricao">Descrição</label>
+          <textarea name="descricao" data-ng-model="vm.article.descricao" id="descricao" class="form-control" cols="30" rows="10" placeholder="Descreva suas atividades"></textarea>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-default">{{vm.article._id ? 'Update' : 'Create'}}</button>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</section>
